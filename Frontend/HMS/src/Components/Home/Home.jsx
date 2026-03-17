@@ -1,11 +1,15 @@
-import Navbar from './Navbar'
-import Banner from './Banner'
 
+import Banner from './Banner'
+import Service from './Service'
+import Doctors from './Doctors'
+import Testimonials from './Testimonials'
 const Home = () => {
   return (
     <>
-     <Navbar/>
      <Banner/>
+     <Service/>
+     <Doctors/>
+     <Testimonials/>
     </>
   )
 }
