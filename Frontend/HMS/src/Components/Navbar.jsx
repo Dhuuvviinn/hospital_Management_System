@@ -22,7 +22,7 @@ const Navbar = ({ isAuthenticated,setIsAuthenticated }) => {
     
     <a className="brand" href="index.html">
       <span className="brand__mark">+</span>
-      <span className="brand__name">Group3</span>
+      <span className="brand__name">Group5</span>
     </a>
 
       {

@@ -1,0 +1,105 @@
+import React from 'react'
+
+const AdminMessage = () => {
+  return (
+    <>
+     <main className="main">
+      <div className="content">
+        <div className="container">
+          <div className="pageTitle">
+            <div>
+              <p className="kicker">Inbox</p>
+              <h1>Messages</h1>
+              <p className="muted" style={{ marginTop: "6px" }}>
+                Contact requests from the public site (static UI).
+              </p>
+            </div>
+            <a className="btn btn--ghost" href="../contact.html">
+              Open Contact page
+            </a>
+          </div>
+
+          <div className="split">
+            <div className="card" style={{ padding: "18px" }}>
+              <div style={{ fontWeight: 1000 }}>Recent</div>
+              <div
+                className="muted"
+                style={{ fontWeight: 800, fontSize: "13px", marginTop: "4px" }}
+              >
+                Click to view (static)
+              </div>
+
+              <div style={{ marginTop: "12px" }} className="grid">
+                <div className="listItem">
+                  <div className="left">
+                    <div className="avatarSq"></div>
+                    <div>
+                      <div className="title">Sarah W. — Appointment query</div>
+                      <div className="sub">“Can I get an earlier slot?”</div>
+                    </div>
+                  </div>
+                  <span className="badge badge--green">New</span>
+                </div>
+
+                <div className="listItem">
+                  <div className="left">
+                    <div className="avatarSq"></div>
+                    <div>
+                      <div className="title">James K. — Report timeline</div>
+                      <div className="sub">“How long do labs take?”</div>
+                    </div>
+                  </div>
+                  <span className="badge badge--amber">Open</span>
+                </div>
+
+                <div className="listItem">
+                  <div className="left">
+                    <div className="avatarSq"></div>
+                    <div>
+                      <div className="title">Ayesha R. — Pediatrics</div>
+                      <div className="sub">“Need vaccination schedule.”</div>
+                    </div>
+                  </div>
+                  <span className="badge badge--amber">Open</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="card formCard">
+              <p className="kicker">Preview</p>
+              <h3 style={{ marginTop: "6px" }}>Sarah W.</h3>
+              <p className="muted" style={{ marginTop: "8px" }}>
+                Subject: Appointment query
+                <br />
+                Message: Can I get an earlier slot for cardiology consultation?
+              </p>
+
+              <div className="hr"></div>
+              <form action="#" method="post">
+                <div className="field">
+                  <label htmlFor="r">Reply</label>
+                  <textarea
+                    id="r"
+                    rows="5"
+                    placeholder="Write your reply..."
+                  ></textarea>
+                </div>
+                <button
+                  className="btn btn--primary btn--full"
+                  style={{ marginTop: "12px" }}
+                  type="submit"
+                >
+                  Send Reply
+                </button>
+                <div className="note">Replace with POST /api/messages/reply</div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    </>
+  )
+}
+
+export default AdminMessage

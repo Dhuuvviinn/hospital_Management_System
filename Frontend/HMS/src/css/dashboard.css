@@ -16,7 +16,7 @@
   position: sticky;
   top: 0;
   height: 100vh;
-  background: rgba(2,8,23,.96);
+  background: rgba(33, 34, 37, 0.96);
   color: rgba(255,255,255,.9);
   border-right: 1px solid rgba(255,255,255,.10);
 }
@@ -98,12 +98,12 @@
 
 /* Main */
 .main{ display:flex; flex-direction:column; min-width: 0; }
-.topbar{
+.dash .topbar{
   background: rgba(255,255,255,.85);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-.topbar__row{
+.dash .topbar__row{
   display:flex;
   align-items:center;
   justify-content:space-between;
