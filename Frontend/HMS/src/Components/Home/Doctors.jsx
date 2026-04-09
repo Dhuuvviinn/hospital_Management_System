@@ -1,8 +1,10 @@
 import React from "react";
 import doctorData from "../../data/DockerData";
 import { Link } from "react-router";
+import { useSelector } from "react-redux";
 
 function Doctors() {
+  const doctorData = useSelector((state) => state.doctor.doctors);
   return (
     <section className="section section--alt" id="doctors">
       <div className="container">
@@ -17,15 +19,15 @@ function Doctors() {
         </div>
 
         <div className="grid grid-4">
-          {doctorData.slice(0, 4).map((doctor) => <>
-          <article className="card doctorCard">
+          {doctorData.map((doctor) => <>
+          <article className="card doctorCard" key={doctor.id}>
             <div className="doctorCard__img"></div>
             <div className="doctorCard__body">
-              <h3>{doctor.name}</h3>
-              <p>{doctor.specialization}</p>
+              <h3>{doctor.full_name}</h3>
+              <p>{doctor.department}</p>
               <div className="row">
-                <span className="badge badge--green">Available</span>
-                <Link className="btn btn--primary btn--sm" to={doctor.profileLink}>
+                <span className="badge badge--green">{doctor.doctor_status}</span>
+                <Link className="btn btn--primary btn--sm" to={`/doctors/${doctor.id}`}>
                   View
                 </Link>
               </div>

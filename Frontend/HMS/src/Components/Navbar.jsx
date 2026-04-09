@@ -1,7 +1,13 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router'
+import { LogoutUser } from '../Redux/Slices/LoginSlice'
+import { useDispatch } from 'react-redux'
 
 const Navbar = ({ isAuthenticated,setIsAuthenticated }) => {
+const dispatch = useDispatch()
+const logout = () =>{
+    dispatch(LogoutUser())
+}
     return (
         <>
             <div className="topbar">
@@ -61,12 +67,14 @@ const Navbar = ({ isAuthenticated,setIsAuthenticated }) => {
     </nav>
      <div className="header__cta">
       
-      <Link className="btn btn--primary btn--sm" onClick={()=>setIsAuthenticated(false)} to="/logout">logout</Link>
+      <button className="btn btn--primary btn--sm" onClick={logout} >
+        logout
+      </button>
      
     </div>
       </>) : (<>  <div className="header__cta">
       
-      <Link className="btn btn--ghost btn--sm" onClick={()=>setIsAuthenticated(true)} to="/login">Login</Link>
+      <Link className="btn btn--ghost btn--sm" to="/login">Login</Link>
       <Link className="btn btn--primary btn--sm" to="/appointment">Book Now</Link>
      
     </div></>)

@@ -16,27 +16,27 @@ const AdminLayout = () => {
             </a>
 
             <nav className="sideNav">
-              <NavLink className="active" to="index.html">
+              <NavLink  to="/admin" end className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Overview</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="doctors.html">
+              <NavLink to="/admin/docter" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Doctors</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="appointments.html">
+              <NavLink to="/admin/appointments" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Appointments</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="add-doctor.html">
+              <NavLink to="/admin/add-doctor" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Add Doctor</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="messages.html">
+              <NavLink to="/admin/message" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Messages</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="settings.html">
+              <NavLink to="/admin/settings" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Settings</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink >
