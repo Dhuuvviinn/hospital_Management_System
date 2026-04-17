@@ -1,6 +1,28 @@
 import React from 'react'
 import appointments from '../data/AdminData'
+import { useSelector } from 'react-redux'
 const AdminIndex = () => {
+  const {user} = useSelector((state)=> state.login)
+  const {doctors} = useSelector((state)=> state.doctor)
+  const {appointments} = useSelector((state)=> state.appointment)
+  const appoitmentCopy = appointments.data.map((appointment)=>{
+     return appointment
+  })
+  const AppointmentPendingStatus = appointments.data.filter(
+    (appointment) => appointment.status === "pending"
+  ).length
+
+  const appointmentCopy = appointments.data.map((appointment) => {
+  const doctor = doctors.find((doctor) => doctor.id === appointment.doctor);
+
+  return {
+    ...appointment,
+    doctor_name: doctor ? doctor.full_name : "Unknown Doctor",
+  };
+});
+
+console.log(appointmentCopy);
+
   return (
     <>
      <main className="main">
@@ -26,13 +48,13 @@ const AdminIndex = () => {
                 </div>
               </div>
 
-              <div className="cards">
+              <div className="cards" style={{ marginBottom: 18 }}>
                 <div className="card metric">
                   <div className="row">
                     <div style={{ fontWeight: 1000 }}>Total Doctors</div>
                     <span className="badge badge--blue">Live</span>
                   </div>
-                  <div className="big">28</div>
+                  <div className="big">{doctors.length}</div>
                   <div className="small">+2 this week</div>
                 </div>
 
@@ -41,7 +63,7 @@ const AdminIndex = () => {
                     <div style={{ fontWeight: 1000 }}>Appointments</div>
                     <span className="badge badge--green">Today</span>
                   </div>
-                  <div className="big">46</div>
+                  <div className="big">{appointments.data.length}</div>
                   <div className="small">78% confirmed</div>
                 </div>
 
@@ -50,11 +72,11 @@ const AdminIndex = () => {
                     <div style={{ fontWeight: 1000 }}>Pending Requests</div>
                     <span className="badge badge--amber">Queue</span>
                   </div>
-                  <div className="big">11</div>
+                  <div className="big">{AppointmentPendingStatus}</div>
                   <div className="small">Need review</div>
                 </div>
 
-                <div className="card metric">
+                {/* <div className="card metric">
                   <div className="row">
                     <div style={{ fontWeight: 1000 }}>New Messages</div>
                     <span
@@ -70,10 +92,10 @@ const AdminIndex = () => {
                   </div>
                   <div className="big">7</div>
                   <div className="small">Last 24h</div>
-                </div>
+                </div> */}
               </div>
 
-              <div className="split">
+              <div className="fullWidth">
                 <div className="card" style={{ padding: 18 }}>
                   <div
                     style={{
@@ -114,13 +136,13 @@ const AdminIndex = () => {
                         </tr>
                       </thead>
                       <tbody>
-                        {appointments.map((item, index) => (
+                        {appointmentCopy.map((item, index) => (
                           <tr key={index}>
-                            <td>{item.patient}</td>
-                            <td>{item.doctor}</td>
-                            <td>{item.time}</td>
+                            <td>{item.full_name}</td>
+                            <td>{item.doctor_name}</td>
+                            <td>{item.appointment_time}</td>
                             <td>
-                              <span className={item.statusClass}>{item.status}</span>
+                              <span className={`${item.status == 'confirmed' ? 'badge badge--green' : 'badge badge--danger'}`}>{item.status}</span>
                             </td>
                           </tr>
                         ))}
@@ -129,7 +151,7 @@ const AdminIndex = () => {
                   </div>
                 </div>
 
-                <div className="card formCard">
+                {/* <div className="card formCard">
                   <p className="kicker">Quick actions</p>
                   <h3 style={{ marginTop: 6 }}>Send update</h3>
                   <p className="muted" style={{ marginTop: 8 }}>
@@ -161,7 +183,7 @@ const AdminIndex = () => {
 
                     <div className="note">Replace with API call later.</div>
                   </form>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

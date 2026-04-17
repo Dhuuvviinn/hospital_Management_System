@@ -1,7 +1,7 @@
 from email.mime import message
 from django.core.cache import cache
 from django.shortcuts import render,HttpResponse
-from .serialization import SignInSerializer, LogInSerializer,ResetPasswordFirstStepSerializer,ResetPasswordForUser,ResetPasswordInDBSerializer,AdminCreateStaffSerializer
+from .serialization import SignInSerializer, LogInSerializer,ResetPasswordFirstStepSerializer,ResetPasswordForUser,ResetPasswordInDBSerializer,AdminCreateStaffSerializer,DoctorStatusChangeSerializer
 from rest_framework.response import Response
 from rest_framework import status,permissions
 from rest_framework.permissions import IsAuthenticated
@@ -10,6 +10,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
 from .task import send_reset_password_email
+from django.shortcuts import get_object_or_404
 import secrets
 # Create your views here.
 @api_view(['POST'])
@@ -96,6 +97,7 @@ def ForgetPassword(request):
 @permission_classes([IsAuthenticated])
 def me(request):
     user = request.user
+    print("Authenticated user view me:", user)
     if user.role == "staff":
         user = User.objects.filter(email = user.email).values('id','email','full_name','role','department','experience','bio','doctor_status','must_change_password').first()
         return Response({'message': "login Successful",'user': {
@@ -110,7 +112,7 @@ def me(request):
                 'doctor_status': user['doctor_status'],
                 'must_change_password': user['must_change_password'],
             }}, status=status.HTTP_200_OK)
-    print("Authenticated user:", user)
+   
     return Response(
         {'message': "login Successful",
               'user': { "access_token": request.COOKIES.get("access_token"),
@@ -153,6 +155,20 @@ def adminCreateStaff(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_all_docter(request):
-    doctors = User.objects.filter(role="staff").values('id','full_name','department','experience','bio','doctor_status')
+    doctors = User.objects.filter(role="staff").values('id','full_name','department','experience','bio','doctor_status',"image")
     print("Retrieved doctors:", doctors)
     return Response({'doctors': list(doctors)}, status=status.HTTP_200_OK)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def update_doctor_status(request):
+    print("Received request to update doctor status with data:", request.data)
+    doctor = get_object_or_404(User, id= request.data.get("id"))
+    print("Doctor found for status update:", doctor)
+    doctorStatusserializer = DoctorStatusChangeSerializer(doctor, data=request.data, partial=True)
+    print("Serializer initialized with data:", doctorStatusserializer)
+    if doctorStatusserializer.is_valid():
+        doctorStatusserializer.save()
+        return Response({"message": "Doctor status updated successfully"}, status=status.HTTP_200_OK)
+    return Response(doctorStatusserializer.errors, status=status.HTTP_400_BAD_REQUEST)

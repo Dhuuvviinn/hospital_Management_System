@@ -2,9 +2,8 @@ import React, { use } from 'react'
 import { LoginUser } from '../../Redux/Slices/LoginSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router'
+import { toast } from 'react-toastify'
 const Login = () => {
-
-  const {} =  useSelector((state)=>state.login)
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
@@ -15,7 +14,11 @@ const Login = () => {
   const LoginAPIcall = (e) =>{
     e.preventDefault();
     console.log("formData")
-    dispatch(LoginUser(formData))
+    dispatch(LoginUser(formData)).unwrap().then(()=>{
+      toast.success("Login successful!")
+    }).catch(()=>{
+      toast.error("Login failed. Please check your credentials.")
+    })
   }
   return (
     <>

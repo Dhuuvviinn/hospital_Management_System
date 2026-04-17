@@ -26,9 +26,9 @@ function Service() {
               <p className="desc">
                 {service.description}
               </p>
-              <a className="link" href={service.link}>
+              <Link className="link" to={service.link}>
                 Book →
-              </a>
+              </Link>
             </div>
           </article>
             </>)

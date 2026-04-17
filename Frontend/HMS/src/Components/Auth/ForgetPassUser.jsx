@@ -9,15 +9,13 @@ const ForgetPassUser = () => {
         e.preventDefault()
         setLoading(true)
         try {
-            const response = await axios.post("http://127.0.0.1:8000/accounts/forget-password/", {"email": email})
+            const response = await axios.post("http://localhost:8000/accounts/forget-password/", {"email": email})
             console.log("response:", response)
             if (response.status === 200) {
                 alert("Reset link sent to your email!")
-               // navigate to reset password page
             }
             
         } catch (error) {
-            console.log("❌ Something is wrong in sending reset link:", error)
             alert("Failed to send reset link. Please try again.")
         } finally {
             setLoading(false)

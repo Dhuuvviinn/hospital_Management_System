@@ -48,18 +48,6 @@ const About = () => {
               </p>
 
               <div className="hr"></div>
-
-              <Link className="btn btn--primary" to="/dashboard">
-                Open Dashboard
-              </Link>
-
-              <Link
-                className="btn btn--ghost"
-                style={{ marginLeft: "10px" }}
-                to="/appointment"
-              >
-                Book Appointment
-              </Link>
             </div>
           </div>
 

@@ -1,6 +1,41 @@
-import React from 'react'
+import axios from 'axios'
+import { use } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { Get_all_Appointment } from '../Redux/Slices/Appointment'
 
 const AdminAppointment = () => {
+  const {appointments} = useSelector((state)=> state.appointment)
+  const {user} = useSelector((state)=> state.login)
+  const {doctors} = useSelector((state)=> state.doctor) 
+  const dispatch = useDispatch()
+  const appointmentsCopy = appointments.data.map((a) => ({ ...a }))
+  for (let i of doctors) {
+    console.log("Doctor in loop:", i.full_name)
+    for (let j of appointmentsCopy) {
+      if (i.id == j.doctor) {
+        j["doctor_name"] = i.full_name
+      }
+    }
+  }
+
+  const confirmAppointment = (id, status) => {
+    // if (status == "confirmed") {
+      const response = axios.post("http://127.0.0.1:8000/api/doctor-accept-reject-appointment/",{ id: id, status: status },{
+        headers:{
+          Authorization: `Bearer ${user.access_token}`
+        },
+      }).then((res)=>{
+        if (res.status == 200){
+          toast.success("Appointment confirmed successfully!")
+          dispatch(Get_all_Appointment(user.access_token))
+        }
+      }).catch((err)=>{
+        console.error("Error confirming appointment:", err.response ? err.response.data : err.message)
+      })
+    }
+  // }
+  
   return (
      <main className="main">
       <div className="content">
@@ -31,71 +66,82 @@ const AdminAppointment = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>John Doe</td>
-                  <td>Dr. Amelia Carter</td>
-                  <td>2026-03-02</td>
-                  <td>10:30</td>
-                  <td>
-                    <span className="badge badge--amber">Pending</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--primary btn--sm" href="#">
-                      Confirm
-                    </a>{" "}
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Reject
-                    </a>
-                  </td>
-                </tr>
 
-                <tr>
-                  <td>Ayesha R.</td>
-                  <td>Dr. Noah Patel</td>
-                  <td>2026-03-02</td>
-                  <td>11:15</td>
+                {
+                  user.role == "staff" ? (<>
+                  {
+                 appointments && appointments.data.map((appointment)=>(
+                    <tr key={appointment.id}>
+                  <td>{appointment.full_name}</td>
+                  <td>{user.full_name}</td>
+                  <td>{appointment.appointment_date}</td>
+                  <td>{appointment.appointment_time}</td>
                   <td>
-                    <span className="badge badge--green">Confirmed</span>
+                    <span className="badge badge--amber">{appointment.status}</span>
                   </td>
                   <td>
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Reschedule
-                    </a>
+                    {appointment.status == "pending" ? (
+                      <>
+                        <p className="btn btn--primary btn--sm"  onClick={()=>{confirmAppointment(appointment.id,"confirmed")}}>
+                          Confirm
+                        </p>
+                        <p className="btn btn--ghost btn--sm"  onClick={()=>{confirmAppointment(appointment.id,"cancelled")}}>
+                          Reject
+                        </p>
+                      </> 
+                    ):(
+                      <>
+                       <p className="btn btn--ghost btn--sm" onClick={()=>{confirmAppointment(appointment.id,"cancelled")}}>
+                      Cancelled
+                    </p>
+                      </>
+                    )}
+                    
+                   
                   </td>
                 </tr>
+                  ))
+                }
+                  </>) : (<>
+                  {
+                 appointmentsCopy && appointmentsCopy.map((appointment)=>(
+                    <tr key={appointment.id}>
+                  <td>{appointment.full_name}</td>
+                  <td>{appointment.doctor_name}</td>
+                  <td>{appointment.appointment_date}</td>
+                  <td>{appointment.appointment_time}</td>
+                  <td>
+                    <span className="badge badge--amber">{appointment.status}</span>
+                  </td>
+                  <td>
+                    {appointment.status == "pending" ? (
+                      <>
+                        <a className="btn btn--primary btn--sm" href="#" >
+                          Confirm
+                        </a>
+                        <a className="btn btn--ghost btn--sm" href="#">
+                          Reject
+                        </a>
+                      </>
+                    ):(
+                      <>
+                       <a className="btn btn--ghost btn--sm" href="#" >
+                      Cancelled
+                    </a>
+                      </>
+                    )}
+                    
+                   
+                  </td>
+                </tr>
+                  ))
+                }
+                  </>)
+                }
+                
+                
 
-                <tr>
-                  <td>Sarah W.</td>
-                  <td>Dr. Ethan Miller</td>
-                  <td>2026-03-02</td>
-                  <td>12:00</td>
-                  <td>
-                    <span className="badge badge--green">Confirmed</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Reschedule
-                    </a>
-                  </td>
-                </tr>
-
-                <tr>
-                  <td>James K.</td>
-                  <td>Dr. Sofia Nguyen</td>
-                  <td>2026-03-03</td>
-                  <td>14:30</td>
-                  <td>
-                    <span className="badge badge--amber">Pending</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--primary btn--sm" href="#">
-                      Confirm
-                    </a>{" "}
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Reject
-                    </a>
-                  </td>
-                </tr>
+               
               </tbody>
             </table>
           </div>

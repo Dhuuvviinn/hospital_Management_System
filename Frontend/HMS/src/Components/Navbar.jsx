@@ -62,7 +62,7 @@ const logout = () =>{
   </NavLink>
 
   <NavLink to="/contact" className={({ isActive }) => isActive ? "active" : ""}>
-    Contact
+    Feedback
   </NavLink>
     </nav>
      <div className="header__cta">

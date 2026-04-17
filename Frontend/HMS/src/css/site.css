@@ -198,11 +198,22 @@
 /* Doctor cards */
 .doctorCard{ overflow:hidden; }
 .doctorCard__img{
-  height: 150px;
-  background:
-    linear-gradient(135deg, rgba(37,99,235,.18), rgba(20,184,166,.14)),
-    radial-gradient(500px 200px at 40% 0%, rgba(255,255,255,.60), transparent 60%);
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
   border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+}
+
+.doctorCard__img img {
+ width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
 }
 .doctorCard__body{ padding: 14px 14px 16px; }
 .doctorCard__body h3{ font-size: 16px; }

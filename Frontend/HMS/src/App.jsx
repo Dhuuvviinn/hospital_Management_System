@@ -30,6 +30,8 @@ import AdminSetting from './Admin/AdminSetting'
 import AdminAddDocter from './Admin/AdminAddDocter'
 import { GetAllDoctors } from './Redux/Slices/DoctorSlice'
 import DoctorProfileSection from './Components/Doctors/DoctorProfileSection '
+import { Get_all_Appointment } from './Redux/Slices/Appointment'
+import { Get_all_feedback } from './Redux/Slices/FeedbackSlice'
 function PrivateRoute({ isAuthenticated }) {
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 }
@@ -52,6 +54,8 @@ function App() {
   useEffect(()=>{
     if(auth){
       dispatch(GetAllDoctors(user.access_token))
+      dispatch(Get_all_Appointment(user.access_token))
+      dispatch(Get_all_feedback(user.access_token))
     }
   },[auth])
 
@@ -76,8 +80,8 @@ function App() {
             <Route index element={<AdminIndex/>} />
             <Route path='/admin/docter' element={<AdminDocter/>} />
             <Route path='/admin/add-doctor' element={<AdminAddDocter/>} />
-            <Route path='/admin/appointments' element={<AdminAppointment/>} />
             <Route path='/admin/message' element={<AdminMessage/>} />
+            <Route path='/admin/appointments' element={<AdminAppointment/>} />
             <Route path='/admin/settings' element={<AdminSetting/>} />
           </Route>
         </Route>

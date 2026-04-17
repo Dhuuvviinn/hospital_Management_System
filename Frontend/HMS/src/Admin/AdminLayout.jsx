@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink, Outlet } from 'react-router-dom'
 
 const AdminLayout = () => {
+  const {user} = useSelector((state) => state.login)
   return (
     <>
      <div className="dash">
@@ -16,22 +18,32 @@ const AdminLayout = () => {
             </a>
 
             <nav className="sideNav">
-              <NavLink  to="/admin" end className={({ isActive }) => isActive ? "active" : ""}>
+              {user && user.role === "admin" && (
+                 <NavLink  to="/admin" end className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Overview</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="/admin/docter" className={({ isActive }) => isActive ? "active" : ""}>
+              )}
+             {
+                user && user.role === "admin" && (
+                  <NavLink to="/admin/docter" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Doctors</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
+                )
+             }
               <NavLink to="/admin/appointments" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Appointments</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
-              <NavLink to="/admin/add-doctor" className={({ isActive }) => isActive ? "active" : ""}>
+              {
+                user && user.role === "admin" && (
+                  <NavLink to="/admin/add-doctor" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Add Doctor</span>
                 <span style={{ opacity: 0.55 }}>›</span>
               </NavLink>
+                )
+              }
               <NavLink to="/admin/message" className={({ isActive }) => isActive ? "active" : ""}>
                 <span>Messages</span>
                 <span style={{ opacity: 0.55 }}>›</span>
@@ -75,7 +87,7 @@ const AdminLayout = () => {
               <div className="userPill">
                 <span className="dot"></span>
                 <div style={{ lineHeight: 1.1 }}>
-                  <div style={{ fontWeight: 1000,color: "black" }}>Admin</div>
+                  <div style={{ fontWeight: 1000,color: "black" }}>{user.role}</div>
                   <div
                     style={{
                       fontSize: 12,

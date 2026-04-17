@@ -1,6 +1,8 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const AdminMessage = () => {
+  const {feedbacks} = useSelector((state)=> state.feedback)
   return (
     <>
      <main className="main">
@@ -19,7 +21,7 @@ const AdminMessage = () => {
             </a>
           </div>
 
-          <div className="split">
+          <div className="full">
             <div className="card" style={{ padding: "18px" }}>
               <div style={{ fontWeight: 1000 }}>Recent</div>
               <div
@@ -30,42 +32,27 @@ const AdminMessage = () => {
               </div>
 
               <div style={{ marginTop: "12px" }} className="grid">
-                <div className="listItem">
+                {
+                  feedbacks.map((fb)=>(
+                    <>
+                     <div className="listItem">
                   <div className="left">
-                    <div className="avatarSq"></div>
+                    <div className="avatarSq" style={{display: "flex", alignItems: "center", justifyContent: "center",color: "white", backgroundColor: "green"}}><h1>{fb.name.charAt(0).toUpperCase()}</h1></div>
                     <div>
-                      <div className="title">Sarah W. — Appointment query</div>
-                      <div className="sub">“Can I get an earlier slot?”</div>
+                      <div className="title" style={{color: "green"}}>{fb.name.toUpperCase()}</div>
+                      <div className="sub">{fb.message}</div>
+                      <div className="sub">{fb.email}</div>
                     </div>
                   </div>
-                  <span className="badge badge--green">New</span>
+                  <span className="badge badge--green">Dr {fb.doctor_name}</span>
                 </div>
-
-                <div className="listItem">
-                  <div className="left">
-                    <div className="avatarSq"></div>
-                    <div>
-                      <div className="title">James K. — Report timeline</div>
-                      <div className="sub">“How long do labs take?”</div>
-                    </div>
-                  </div>
-                  <span className="badge badge--amber">Open</span>
-                </div>
-
-                <div className="listItem">
-                  <div className="left">
-                    <div className="avatarSq"></div>
-                    <div>
-                      <div className="title">Ayesha R. — Pediatrics</div>
-                      <div className="sub">“Need vaccination schedule.”</div>
-                    </div>
-                  </div>
-                  <span className="badge badge--amber">Open</span>
-                </div>
+                    </>
+                  ))
+                }
               </div>
             </div>
 
-            <div className="card formCard">
+            {/* <div className="card formCard">
               <p className="kicker">Preview</p>
               <h3 style={{ marginTop: "6px" }}>Sarah W.</h3>
               <p className="muted" style={{ marginTop: "8px" }}>
@@ -93,7 +80,7 @@ const AdminMessage = () => {
                 </button>
                 <div className="note">Replace with POST /api/messages/reply</div>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

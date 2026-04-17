@@ -4,43 +4,7 @@ const AdminSetting = () => {
   return (
     <>
           <main className="main">
-      <div className="topbar">
-        <div className="container topbar__row">
-          <label
-            htmlFor="sideToggle"
-            className="sideToggleBtn"
-            aria-label="Toggle sidebar"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </label>
-
-          <div className="search" role="search">
-            <span style={{ fontWeight: 1000, opacity: 0.7 }}>⌕</span>
-            <input
-              type="text"
-              placeholder="Search doctors, patients, appointments..."
-            />
-          </div>
-
-          <div className="userPill">
-            <span className="dot"></span>
-            <div style={{ lineHeight: 1.1 }}>
-              <div style={{ fontWeight: 1000 }}>Admin</div>
-              <div
-                style={{
-                  fontSize: "12px",
-                  color: "var(--muted)",
-                  fontWeight: 800,
-                }}
-              >
-                online
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       <div className="content">
         <div className="container">

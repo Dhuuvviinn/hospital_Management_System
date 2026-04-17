@@ -11,5 +11,6 @@ urlpatterns = [
     path('reset-password/', views.resetPasswordInDB, name='reset_password_for_user'),    
     path('me/',views.me,name="me"),
     path('admin-create-staff/',views.adminCreateStaff,name="admin_create_staff"),
-    path('get-all-doctors/',views.get_all_docter,name="get_all_doctors")
+    path('get-all-doctors/',views.get_all_docter,name="get_all_doctors"),
+    path('update-doctor-status/', views.update_doctor_status, name='update_doctor_status')
 ]

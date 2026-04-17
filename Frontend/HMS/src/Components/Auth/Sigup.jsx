@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { use } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router'
+import { toast } from 'react-toastify'
 
 const Sigup = () => {
   const [formData, setFormData] = React.useState({
@@ -16,12 +17,14 @@ const Sigup = () => {
   const SignUpUser = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('http://127.0.0.1:8000/accounts/signup/', formData)
-      console.log("response:", response)
+      const response = await axios.post('http://localhost:8000/accounts/signup/', formData)
+      
       if (response.status === 201) {
+        toast.success("Account created successfully!")
         nav('/login')
       } 
     } catch (error) {
+      toast.error("Signup failed. Please try again.")
       console.log("❌ Something is wrong in signup :", error)      
     }
   }

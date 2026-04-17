@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, Permis
 
 class UserManager(BaseUserManager):
     def create_user(self,email, full_name, password, role='patient',null=True,**extra_fields):
-        print("Creating user with email:", email, full_name, password, role)
         if not email:
             raise ValueError("the Email field must be required")
         if not full_name:
@@ -19,8 +18,6 @@ class UserManager(BaseUserManager):
             **extra_fields
         )
         user.set_password(password)
-        print("user data add")
-        
         user.save(using=self._db)
         return user
     def create_staff_user(self,email,full_name,password=None,role='staff',department=None,experience=None,bio=None,doctor_status=None,**extra_fields):
@@ -54,14 +51,20 @@ class User(AbstractBaseUser, PermissionsMixin):
     department = models.CharField(max_length=100, blank=True, null=True)
     experience = models.CharField(max_length=50, blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='doctors/', blank=True, null=True)
     doctor_status = models.CharField(
         max_length=20,
         choices=[('active','Active'),('inactive','Inactive'),('on_leave','On Leave')],
-        blank=True, null=True
+        default='active'
     )
+    
     objects = UserManager()
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_name','role']
     
     def __str__(self):
         return f"{self.full_name} ({self.email}) - {self.role}"
+    
+    
+
+

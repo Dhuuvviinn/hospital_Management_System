@@ -30,7 +30,7 @@ const { token } = useParams()   // gets token from URL: /reset-password?token=xx
 
     setLoading(true)
     try {
-      const response = await axios.post("http://127.0.0.1:8000/accounts/reset-password/", {
+      const response = await axios.post("http://localhost:8000/accounts/reset-password/", {
         token,
         password: formData.password,
         confirm_password: formData.confirmPassword,

@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function Testimonials() {
+  const { feedbacks } = useSelector((state) => state.feedback);
+
   return (
     <section className="section" id="testimonials">
       <div className="container">
@@ -12,53 +16,33 @@ function Testimonials() {
         </div>
 
         <div className="grid grid-3">
-          <article className="card quote">
-            <p>“Super clean UI. Booking flow is simple and fast.”</p>
-            <div className="quote__meta">
-              <div className="avatar"></div>
-              <div>
-                <div style={{ fontWeight: 1000 }}>Sarah W.</div>
-                <div
-                  className="muted"
-                  style={{ fontWeight: 800, fontSize: "13px" }}
-                >
-                  Cardiology
-                </div>
-              </div>
-            </div>
-          </article>
+          {feedbacks.map((fb) => (
+            <article className="card quote" key={fb.id}>
+              <p>“{fb.message}”</p>
 
-          <article className="card quote">
-            <p>“Doctor profiles are clear and well structured.”</p>
-            <div className="quote__meta">
-              <div className="avatar"></div>
-              <div>
-                <div style={{ fontWeight: 1000 }}>James K.</div>
-                <div
-                  className="muted"
-                  style={{ fontWeight: 800, fontSize: "13px" }}
-                >
-                  Diagnostics
-                </div>
+              {/* ⭐ Rating */}
+              <div style={{ margin: "10px 0", color: "gold" }}>
+                {"★".repeat(fb.rating)}
+                {"☆".repeat(5 - fb.rating)}
               </div>
-            </div>
-          </article>
 
-          <article className="card quote">
-            <p>“Dashboard layout is perfect for managing appointments.”</p>
-            <div className="quote__meta">
-              <div className="avatar"></div>
-              <div>
-                <div style={{ fontWeight: 1000 }}>Ayesha R.</div>
-                <div
-                  className="muted"
-                  style={{ fontWeight: 800, fontSize: "13px" }}
-                >
-                  Pediatrics
+              <div className="quote__meta">
+                <div className="avatar"></div>
+                <div>
+                  {/* Patient Name */}
+                  <div style={{ fontWeight: 1000 }}>{fb.name}</div>
+
+                  {/* Doctor Name */}
+                  <div
+                    className="muted"
+                    style={{ fontWeight: 800, fontSize: "13px" }}
+                  >
+                    Dr. {fb.doctor_name || "General"}
+                  </div>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
+          ))}
         </div>
       </div>
     </section>

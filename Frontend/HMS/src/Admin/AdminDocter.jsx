@@ -1,8 +1,47 @@
 import React from 'react'
+import { doctor, GetAllDoctors } from '../Redux/Slices/DoctorSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
+import { toast } from 'react-toastify'
 
 const AdminDocter = () => {
+  const { doctors } = useSelector((state) => state.doctor)
+  const { user } = useSelector((state) => state.login)
+  const [doctorStatus, setDoctorStatus] = React.useState({
+    id: null,
+    doctor_status: null
+  })
+
+  const dispatch = useDispatch()
+const ChangeUpdates = async () => {
+  try {
+    const res = await axios.post(
+      "http://127.0.0.1:8000/accounts/update-doctor-status/",
+      {
+        id: doctorStatus.id,
+        doctor_status: doctorStatus.doctor_status,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.access_token}`,
+        },
+      }
+    );
+
+    console.log("SUCCESS:", res.data);
+
+    toast.success("Doctor status updated successfully!");
+    dispatch(GetAllDoctors(user.access_token));
+
+  } catch (err) {
+    console.error(
+      "ERROR:",
+      err.response ? err.response.data : err.message
+    );
+  }
+};
   return (
-     <main className="main">
+    <main className="main">
       <div className="content">
         <div className="container">
           <div className="pageTitle">
@@ -30,65 +69,40 @@ const AdminDocter = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Dr. Amelia Carter</td>
-                  <td>Cardiology</td>
-                  <td>12 yrs</td>
-                  <td>
-                    <span className="badge badge--green">Active</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Edit
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Dr. Ethan Miller</td>
-                  <td>Neurology</td>
-                  <td>9 yrs</td>
-                  <td>
-                    <span className="badge badge--green">Active</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Edit
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Dr. Sofia Nguyen</td>
-                  <td>Dermatology</td>
-                  <td>7 yrs</td>
-                  <td>
-                    <span className="badge badge--amber">On Leave</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Edit
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Dr. Noah Patel</td>
-                  <td>Orthopedics</td>
-                  <td>10 yrs</td>
-                  <td>
-                    <span className="badge badge--green">Active</span>
-                  </td>
-                  <td>
-                    <a className="btn btn--ghost btn--sm" href="#">
-                      Edit
-                    </a>
-                  </td>
-                </tr>
+                {
+                  doctors.map((doctor) => (
+                    <tr>
+                      <td>{doctor.full_name}</td>
+                      <td>{doctor.department}</td>
+                      <td>{doctor.experience} yrs</td>
+                      <td>
+                        <span className="badge badge--green">{doctor.doctor_status == "active" ? "Active" : "Inactive"}</span>
+                      </td>
+                      <td>
+                        <select class="form-select" aria-label="Default select example" onChange={(e) => setDoctorStatus({ id: doctor.id, doctor_status: e.target.value })}>
+                          <option selected>Status Update</option>
+                          <option value="active">Active</option>
+                          <option value="inactive">Inactive</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))
+                }
+
+                
               </tbody>
             </table>
           </div>
+          <button className='btn btn--primary' style={{marginTop: "18px"}} onClick={ChangeUpdates}>
+            Save Changes
+          </button>
         </div>
+
       </div>
     </main>
   )
 }
 
 export default AdminDocter
+
+

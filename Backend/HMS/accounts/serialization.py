@@ -1,4 +1,5 @@
 from django.core.cache import cache
+
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
@@ -8,12 +9,13 @@ class SignInSerializer(serializers.ModelSerializer):
         fields = ('email', 'full_name', 'password', 'is_staff', 'is_active', 'must_change_password')
     
     def create(self, validated_data):
-        
+        print("Creating user with validated data:", validated_data)
         email = validated_data.get("email")
         full_name = validated_data.get("full_name")
         password = validated_data.get("password")
         role = validated_data.get("role", "patient")    
         must_change_password = validated_data.get("must_change_password")
+        print("role:", role)
         if role == 'staff' and email.endswith("@hms.com"):
             user = User.objects.create_staff_user(email=email, full_name=full_name, password=password, role=role)
         elif role == 'admin' and email.endswith("@hms.com"):
@@ -113,10 +115,10 @@ class ResetPasswordInDBSerializer(serializers.Serializer):
 class AdminCreateStaffSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('email', 'full_name', 'role', 'department', 'experience', 'bio', 'doctor_status')
+        fields = ('email', 'full_name', 'role', 'department', 'experience', 'bio', 'doctor_status',"image")
         
     def create(self, validated_data):
-        
+        print("Creating staff user with validated data:", validated_data)
         email = validated_data.get("email")
         full_name = validated_data.get("full_name")
         password = validated_data.get("password") or "defaultpassword123"
@@ -125,11 +127,23 @@ class AdminCreateStaffSerializer(serializers.ModelSerializer):
         experience = validated_data.get("experience")
         bio = validated_data.get("bio")
         doctor_status = validated_data.get("doctor_status") 
-        print("Creating staff user with data:", email, full_name, role,password, department, experience, bio, doctor_status)
+        image = validated_data.get("image")
+        print("Creating staff user with data:", email, full_name, role,password, department, experience, bio, doctor_status,image)
         if role != 'staff' or not email.endswith("@hms.com"):
             raise ValueError("Staff user must have role 'staff' and an email address ending with @hms.com") 
-        user = User.objects.create_staff_user(email=email, full_name=full_name, password=password, role=role, department=department, experience=experience, bio=bio, doctor_status=doctor_status)
+        user = User.objects.create_staff_user(email=email, full_name=full_name, password=password, role=role, department=department, experience=experience, bio=bio, doctor_status=doctor_status, image=image)
         return user
     
-
-        
+    
+class DoctorStatusChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'doctor_status']
+    def update(self, instance, validated_data):
+        doctor_status = validated_data.get('doctor_status')
+        print("Updating doctor status for user:", instance.id,instance.doctor_status)
+        if doctor_status not in ['active', 'inactive', 'on_leave']:
+            raise ValueError("Invalid doctor status")
+        instance.doctor_status = doctor_status
+        instance.save()
+        return instance

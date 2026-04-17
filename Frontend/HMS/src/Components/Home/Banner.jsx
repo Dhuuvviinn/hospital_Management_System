@@ -30,16 +30,16 @@ const Banner = () => {
             </p>
 
             <div className="hero__actions">
-              <a className="btn btn--primary" href="appointment.html">
+              <Link className="btn btn--primary" to="/appointment">
                 Book Appointment
-              </a>
-              <a className="btn btn--ghost" href="doctors.html">
+              </Link>
+              <Link className="btn btn--ghost" to="/doctors">
                 Browse Doctors
-              </a>
+              </Link>
               <button
                 className="btn btn--ghost"
                 disabled={role !== 'patient'? false : true}
-                onClick={() => navigate('/admin')}
+                onClick={role == "admin" ? () => navigate("/admin") : role == "staff" ? () => navigate("/admin/appointments") : null}
               >
                 Open Dashboard
               </button>

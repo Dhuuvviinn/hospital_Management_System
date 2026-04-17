@@ -1,8 +1,10 @@
 import axios from 'axios'
-import React from 'react'
-import { Link } from 'react-router'
+import React, { use } from 'react'
+import { Link, useNavigate } from 'react-router'
 import Cookies from 'js-cookie'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { GetAllDoctors } from '../Redux/Slices/DoctorSlice'
 const AdminAddDocter = () => {
   const [formData, setFormData] = React.useState({
     full_name: "",
@@ -10,20 +12,30 @@ const AdminAddDocter = () => {
     experience: "",
     email: "",
     doctor_status: "",
-    bio: ""
+    bio: "",
+    image: null
   })
-  
+  console.log("Form Data:", formData)
   const {access_token} = useSelector((state)=> state.login.user)
+  const dispatch = useDispatch()
+  const nav = useNavigate()
+  const {user} = useSelector((state)=>state.login)
   const StaffLoginCreate = async (e) => {
     e.preventDefault()
     const response = await axios.post('http://127.0.0.1:8000/accounts/admin-create-staff/',formData,{
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${access_token}`
       }
     })
-
-    console.log(response.data)
+    console.log("Response from adding doctor:", response) 
+    if (response.status === 201){
+      toast.success("Doctor added successfully!")
+      dispatch(GetAllDoctors(user.access_token))
+      nav('/')
+    } else {
+      toast.error("Failed to add doctor. Please try again.")
+    }
   }
 
   return (
@@ -99,10 +111,11 @@ const AdminAddDocter = () => {
 
                     <div className="field">
                       <label htmlFor="ds">Status</label>
-                      <select id="ds" required onChange={(e)=>setFormData({...formData,status: e.target.value})}>
-                        <option>Active</option>
-                        <option>On Leave</option>
-                        <option>Inactive</option>
+                      <select id="ds" required onChange={(e)=>setFormData({...formData,doctor_status: e.target.value})}>
+                        <option value="">Select</option>
+                        <option>active</option>
+                        <option>on_Leave</option>
+                        <option>inactive</option>
                       </select>
                     </div>
 
@@ -115,7 +128,15 @@ const AdminAddDocter = () => {
                         onChange={(e)=>setFormData({...formData,bio: e.target.value})}
                       ></textarea>
                     </div>
-
+                    <div className="field full">
+                      <label htmlFor="di">Image</label>
+                      <input
+                        id="di"
+                        type="file"
+                        accept="image/*"
+                        onChange={(e)=>setFormData({...formData,image: e.target.files[0]})}
+                      />
+                    </div>
                     <div className="field full">
                       <button
                         className="btn btn--primary btn--full"
