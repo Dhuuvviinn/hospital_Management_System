@@ -161,7 +161,7 @@ const Contact = () => {
 
               <div className="hr"></div>
 
-              <button className="btn btn--ghost" to="/admin" disabled={user?.role == "patient" ? true : false} onClick={user.role == "admin" ? () => nav("/admin") : user.role == "staff" ? () => nav("/admin/appointments") : null}>
+              <button className="btn btn--ghost" to="/admin" disabled={user?.role == "patient" ? true : false} onClick={user.role == "admin" ? () => nav("/admin") : user.role == "staff" ? () => nav ("/admin/appointments") : null}>
                 Open Dashboard
               </button>
             </div>

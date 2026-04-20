@@ -1,5 +1,5 @@
 from django.core.cache import cache
-
+import traceback
 from rest_framework import serializers
 from .models import User
 from django.contrib.auth import authenticate
@@ -131,8 +131,16 @@ class AdminCreateStaffSerializer(serializers.ModelSerializer):
         print("Creating staff user with data:", email, full_name, role,password, department, experience, bio, doctor_status,image)
         if role != 'staff' or not email.endswith("@hms.com"):
             raise ValueError("Staff user must have role 'staff' and an email address ending with @hms.com") 
-        user = User.objects.create_staff_user(email=email, full_name=full_name, password=password, role=role, department=department, experience=experience, bio=bio, doctor_status=doctor_status, image=image)
-        return user
+        try:
+            user = User.objects.create_staff_user(email=email, full_name=full_name, password=password, role=role, department=department, experience=experience, bio=bio, doctor_status=doctor_status, image=image)
+            print(user)
+            return user
+        except Exception as e:
+            print("ERROR TYPE:", type(e).__name__)
+            print("ERROR MESSAGE:", str(e))
+            print("FULL TRACEBACK:")
+            traceback.print_exc()   # ✅ prints full stack trace
+            raise
     
     
 class DoctorStatusChangeSerializer(serializers.ModelSerializer):

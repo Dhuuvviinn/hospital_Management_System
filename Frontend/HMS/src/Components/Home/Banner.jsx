@@ -43,7 +43,7 @@ const Banner = () => {
               >
                 Open Dashboard
               </button>
-
+            
             </div>
 
             <div className="hero__stats">

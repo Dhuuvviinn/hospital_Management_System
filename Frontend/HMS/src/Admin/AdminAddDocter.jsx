@@ -113,9 +113,9 @@ const AdminAddDocter = () => {
                       <label htmlFor="ds">Status</label>
                       <select id="ds" required onChange={(e)=>setFormData({...formData,doctor_status: e.target.value})}>
                         <option value="">Select</option>
-                        <option>active</option>
-                        <option>on_Leave</option>
-                        <option>inactive</option>
+                        <option value="active">Active</option>
+                        <option value="on_leave">On_Leave</option>      {/* ✅ lowercase 'l' */}
+                        <option value="inactive">Inactive</option>
                       </select>
                     </div>
 

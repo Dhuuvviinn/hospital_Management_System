@@ -12,21 +12,24 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+ROOT_DIR  = ROOT_DIR = BASE_DIR.parent.parent
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+load_dotenv(ROOT_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-24q-b-a!33q#t+b_9f+nelk(d8s24-5u=*d9m9$3wrc)0o9&aa'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
+print(DEBUG)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [h.strip() for h in os.getenv("ALLOWED_HOSTS", "").split(",") if h.strip()]
 
 
 # Application definition
@@ -59,15 +62,15 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",    
+    os.getenv("CORS_ALLOWED_ORIGINS"),    
 ]   
 
 CORS_ALLOW_CREDENTIALS = True 
   
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
+     os.getenv("CSRF_TRUSTED_ORIGINS"),
 ]
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -145,8 +148,8 @@ REST_FRAMEWORK = {
     ],
 }
 
-CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
-CELERY_RESULT_BACKEND = "redis://127.0.0.1:6379/0"
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
@@ -161,21 +164,21 @@ CACHES = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'        # or your provider's SMTP host
-EMAIL_PORT = 587                      # 587 for TLS, 465 for SSL
+EMAIL_HOST = os.getenv("EMAIL_HOST")       # or your provider's SMTP host
+EMAIL_PORT = os.getenv("EMAIL_PORT")                      # 587 for TLS, 465 for SSL
 EMAIL_USE_TLS = True                  # True for port 587
 EMAIL_USE_SSL = False                 # True only if using port 465
-EMAIL_HOST_USER = 'dhruvin123.saurabhifosys@gmail.com'
-EMAIL_HOST_PASSWORD = 'xetd azoq tcpy zejk'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hms_db',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5434',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': os.getenv("DB_PORT"),
     }
 }

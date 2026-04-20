@@ -12,7 +12,7 @@ node_modules/
 dist/
 dist-ssr/
 *.local
-
+.env
 # Python
 venv/
 .venv/
@@ -29,3 +29,33 @@ Backend/venv/
 *.njsproj
 *.sln
 *.sw?
+
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+*.tfvars
+*.tfvars.json
+crash.log
+
+# Terraform
+Terraform/terr-key
+Terraform/terr-key.pub
+*.pem
+*.key
+Terraform/.terraform/
+Terraform/terraform.tfstate
+Terraform/terraform.tfstate.*
+Terraform/*.tfvars
+
+# Keys (VERY IMPORTANT)
+Terraform/terr-key
+*.pem
+*.key
+
+# Env
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc

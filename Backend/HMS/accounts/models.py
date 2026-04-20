@@ -20,11 +20,11 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
         return user
-    def create_staff_user(self,email,full_name,password=None,role='staff',department=None,experience=None,bio=None,doctor_status=None,**extra_fields):
+    def create_staff_user(self,email,full_name,password=None,role='staff',department=None,experience=None,bio=None,doctor_status=None,image=None,**extra_fields):
         extra_fields.setdefault('is_staff', True)
         if not email.endswith("@hms.com"):
             raise ValueError("Staff user must have an email address ending with @hms.com")
-        return self.create_user(email, full_name, password, role, department=department, experience=experience, bio=bio, doctor_status=doctor_status, **extra_fields)
+        return self.create_user(email, full_name, password, role, department=department, experience=experience, bio=bio, doctor_status=doctor_status,image=image,**extra_fields)
         
     def create_superuser(self,email,full_name,password=None,role='admin',**extra_fields):
         extra_fields.setdefault('is_staff', True)

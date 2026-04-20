@@ -12,6 +12,67 @@ services:
       - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hms_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: hms-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  celery:
+    build:
+      context: ./Backend/HMS
+    container_name: hms-celery
+    command: celery -A accounts worker --loglevel=info --pool=solo
+    volumes:
+      - media_data:/app/media
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+
+  backend:
+    build:
+      context: ./Backend/HMS
+      dockerfile: Dockerfile
+    container_name: hms-backend
+    restart: always
+    command: sh -c "python manage.py migrate && gunicorn HMS.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - media_data:/app/media  
+    ports:  
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    
+  frontend:
+    build:
+      context: ./Frontend/HMS
+      dockerfile: Dockerfile
+    container_name: hms-frontend
+    restart: always
+    volumes:
+      - media_data:/usr/share/nginx/media
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
 
 volumes:
   postgres_data:
+  media_data:  
