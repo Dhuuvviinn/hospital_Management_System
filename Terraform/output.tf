@@ -1,7 +1,15 @@
-output "public_ip" {
-  value = module.infra.public_id
+output "Jenkins_public_ip" {
+  value = module.infra.Jenkins_public_ip
 }
 
-output "public_dns" {
-  value = module.infra.instance_public_dns
+output "Jenkins_public_dns" {
+  value = module.infra.Jenkins_public_dns
+}
+
+output "sonarQube_public_ip" {
+  value = module.infra.sonarQube_public_ip
+}
+
+output "sonarQube_public_dns" {
+  value = module.infra.sonarQube_public_dns
 }

@@ -14,3 +14,18 @@ resource "aws_instance" "jenkins" {
   }
 
 }
+
+resource "aws_instance" "sonarQube_Nexus" {
+  ami = "ami-098e39bafa7e7303d"
+  instance_type = "t3.large"
+  key_name = aws_key_pair.aws-key.key_name
+  vpc_security_group_ids = [aws_security_group.my_security_group.id]
+  subnet_id = aws_subnet.public_subnet.id
+  tags = {
+    Name = "SonarQube-Server + Nexus-Repository"
+  }
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 80
+  }
+}

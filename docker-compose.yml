@@ -29,6 +29,7 @@ services:
     build:
       context: ./Backend/HMS
     container_name: hms-celery
+    image: dhruvinpatel17/hms-celery:latest
     command: celery -A accounts worker --loglevel=info --pool=solo
     volumes:
       - media_data:/app/media
@@ -46,6 +47,7 @@ services:
       context: ./Backend/HMS
       dockerfile: Dockerfile
     container_name: hms-backend
+    image: dhruvinpatel17/hms-backend:latest
     restart: always
     command: sh -c "python manage.py migrate && gunicorn HMS.wsgi:application --bind 0.0.0.0:8000"
     volumes:
@@ -65,6 +67,7 @@ services:
       context: ./Frontend/HMS
       dockerfile: Dockerfile
     container_name: hms-frontend
+    image: dhruvinpatel17/hms-frontend:latest
     restart: always
     volumes:
       - media_data:/usr/share/nginx/media
