@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { data, Link, useNavigate } from 'react-router'
+import { baseURL } from '../../Redux/baseurl'
 const ForgetPassUser = () => {
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
@@ -9,7 +10,7 @@ const ForgetPassUser = () => {
         e.preventDefault()
         setLoading(true)
         try {
-            const response = await axios.post("http://localhost:8000/accounts/forget-password/", {"email": email})
+            const response = await axios.post(`${baseURL}/accounts/forget-password/`, {"email": email})
             console.log("response:", response)
             if (response.status === 200) {
                 alert("Reset link sent to your email!")

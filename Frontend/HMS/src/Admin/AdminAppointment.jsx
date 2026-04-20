@@ -3,6 +3,7 @@ import { use } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Get_all_Appointment } from '../Redux/Slices/Appointment'
+import { baseURL } from '../Redux/baseurl'
 
 const AdminAppointment = () => {
   const {appointments} = useSelector((state)=> state.appointment)
@@ -21,7 +22,7 @@ const AdminAppointment = () => {
 
   const confirmAppointment = (id, status) => {
     // if (status == "confirmed") {
-      const response = axios.post("http://127.0.0.1:8000/api/doctor-accept-reject-appointment/",{ id: id, status: status },{
+      const response = axios.post(`${baseURL}/api/doctor-accept-reject-appointment/`,{ id: id, status: status },{
         headers:{
           Authorization: `Bearer ${user.access_token}`
         },

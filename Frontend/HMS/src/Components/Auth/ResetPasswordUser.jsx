@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
+import { baseURL } from '../../Redux/baseurl'
 
 
 function ResetPasswordUser() {
@@ -30,7 +31,7 @@ const { token } = useParams()   // gets token from URL: /reset-password?token=xx
 
     setLoading(true)
     try {
-      const response = await axios.post("http://localhost:8000/accounts/reset-password/", {
+      const response = await axios.post(`${baseURL}/accounts/reset-password/`, {
         token,
         password: formData.password,
         confirm_password: formData.confirmPassword,

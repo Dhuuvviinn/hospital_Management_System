@@ -51,7 +51,10 @@ Terraform/*.tfvars
 Terraform/terr-key
 *.pem
 *.key
-
+__pycache__/
+*.pyc
+.coverage
+coverage.xml
 # Env
 .env
 .env.*

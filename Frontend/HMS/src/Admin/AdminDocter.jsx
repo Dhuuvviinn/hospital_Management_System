@@ -3,6 +3,7 @@ import { doctor, GetAllDoctors } from '../Redux/Slices/DoctorSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { baseURL } from '../Redux/baseurl'
 
 const AdminDocter = () => {
   const { doctors } = useSelector((state) => state.doctor)
@@ -16,7 +17,7 @@ const AdminDocter = () => {
 const ChangeUpdates = async () => {
   try {
     const res = await axios.post(
-      "http://127.0.0.1:8000/accounts/update-doctor-status/",
+      `${baseURL}/accounts/update-doctor-status/`,
       {
         id: doctorStatus.id,
         doctor_status: doctorStatus.doctor_status,

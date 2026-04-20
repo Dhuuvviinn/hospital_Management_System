@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { baseURL } from "../baseurl";
 
 export const Get_all_feedback = createAsyncThunk("feedback/GetAllFeedback",async(token,{rejectWithValue})=>{
-    console.log("Token received in Get_all_feedback thunk:", token)
+   
     try {
-        const response = await axios.get("http://127.0.0.1:8000/feedback/GetAllFeedback/",{
+        const response = await axios.get(`${baseURL}/feedback/GetAllFeedback/`,{
             headers:{
                 Authorization: `Bearer ${token}`
             }

@@ -4,6 +4,7 @@ import React, { use } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
+import { baseURL } from '../../Redux/baseurl'
 
 const Sigup = () => {
   const [formData, setFormData] = React.useState({
@@ -17,7 +18,7 @@ const Sigup = () => {
   const SignUpUser = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post('http://localhost:8000/accounts/signup/', formData)
+      const response = await axios.post(`${baseURL}/accounts/signup/`, formData)
       
       if (response.status === 201) {
         toast.success("Account created successfully!")

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Get_all_feedback } from '../../Redux/Slices/FeedbackSlice';
+import { baseURL } from '../../Redux/baseurl';
 const Contact = () => {
   const {user} = useSelector((state) => state.login);
   const [formData,setFormData] = useState({
@@ -17,7 +18,7 @@ const Contact = () => {
   const handleChange = async (e) => {
     e.preventDefault()
     formData["user_id"] = user.id
-    const response = await axios.post("http://127.0.0.1:8000/feedback/submit-feedback/",formData,{
+    const response = await axios.post(`${baseURL}/feedback/submit-feedback/`,formData,{
       headers: {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${user.access_token}`

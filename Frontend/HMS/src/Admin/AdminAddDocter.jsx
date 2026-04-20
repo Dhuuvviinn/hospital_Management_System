@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { GetAllDoctors } from '../Redux/Slices/DoctorSlice'
+import { baseURL } from '../Redux/baseurl'
 const AdminAddDocter = () => {
   const [formData, setFormData] = React.useState({
     full_name: "",
@@ -22,7 +23,7 @@ const AdminAddDocter = () => {
   const {user} = useSelector((state)=>state.login)
   const StaffLoginCreate = async (e) => {
     e.preventDefault()
-    const response = await axios.post('http://127.0.0.1:8000/accounts/admin-create-staff/',formData,{
+    const response = await axios.post(`${baseURL}/accounts/admin-create-staff/`,formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Bearer ${access_token}`

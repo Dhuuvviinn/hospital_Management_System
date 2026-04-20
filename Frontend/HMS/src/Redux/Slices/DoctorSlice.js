@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
+import { baseURL } from "../baseurl"
 
 export const GetAllDoctors = createAsyncThunk("docter/getAllDoctors",async(token,thunkAPI)=>{
     try {   
-        const response = await axios.get('http://127.0.0.1:8000/accounts/get-all-doctors/', {
+        const response = await axios.get(`${baseURL}/accounts/get-all-doctors/`, {
             headers: {
                 "Content-Type": "application/json",
                 'Authorization': `Bearer ${token}`

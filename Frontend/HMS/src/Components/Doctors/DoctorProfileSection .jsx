@@ -51,7 +51,7 @@ const DoctorProfileSection = () => {
       <div className="container grid grid-2">
         <div className="card">
           <div className="">
-            <img src={`http://127.0.0.1:8000/media/${filterDataForProfile?.image}`} alt="" />
+            <img src={`${baseURL}/media/${filterDataForProfile?.image}`} alt="" />
           </div>
 
           <div className="card__pad">
