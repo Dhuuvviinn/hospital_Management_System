@@ -14,9 +14,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN useradd -m appuser
+RUN useradd -m appuser \
+    && mkdir -p /app/media \
+    && chown -R appuser:appuser /app/media \
+    && chmod -R 755 /app/media
+
 USER appuser
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "hms.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "HMS.wsgi:application"]
