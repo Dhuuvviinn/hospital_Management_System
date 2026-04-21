@@ -47,6 +47,7 @@ services:
       context: ./Backend/HMS
       dockerfile: Dockerfile
     container_name: hms-backend
+    user: root  
     image: dhruvinpatel17/hms-backend:latest
     restart: always
     command: sh -c "python manage.py migrate && gunicorn HMS.wsgi:application --bind 0.0.0.0:8000"
