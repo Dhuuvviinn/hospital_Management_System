@@ -23,7 +23,7 @@ function Doctors() {
           {doctorData.map((doctor) => <>
           <article className="card doctorCard" key={doctor.id}>
             <div className="doctorCard__img">
-              <img src={`http://127.0.0.1:8000/media/${doctor.image}`} alt={doctor.full_name} />
+              <img src={`https://dhruvin-hms-media-bucket-12345.s3.us-east-1.amazonaws.com/${doctor.image}`} alt={doctor.full_name} />
             </div>
             <div className="doctorCard__body">
               <h3>{doctor.full_name}</h3>

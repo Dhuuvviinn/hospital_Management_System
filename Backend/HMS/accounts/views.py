@@ -144,6 +144,8 @@ def resetPasswordInDB(request):
 @permission_classes([IsAuthenticated])
 def adminCreateStaff(request):
     print("Received request to create staff user with data:", request.data)
+    print("Received request FILES:", request.FILES)
+
     
     serializer = AdminCreateStaffSerializer(data=request.data)
     if serializer.is_valid():
