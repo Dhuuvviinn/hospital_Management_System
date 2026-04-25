@@ -7,7 +7,7 @@ import { baseURL } from "../baseurl"
 export const Appointment_TO_Doctor = createAsyncThunk("appointment/AppoitnmentsToDoctor",async({data,token},{rejectWithValue})=>{
     console.log("Data received in Get_All_Appointments:", data,token)
     try{
-        const response = await axios.post("http://127.0.0.1:8000/api/appointment-to-doctor/",data,{
+        const response = await axios.post(`${baseURL}/api/appointment-to-doctor/`,data,{
             headers:{
                 "Content-Type":"application/json",
                 Authorization: `Bearer ${token}`

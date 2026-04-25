@@ -12,6 +12,7 @@ from .models import User
 from .task import send_reset_password_email
 from django.shortcuts import get_object_or_404
 import secrets
+import os
 # Create your views here.
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
@@ -79,19 +80,20 @@ def ForgetPassword(request):
     
     if UserData.is_valid():
         email = UserData.validated_data['email']
-        print("Received password reset request for email:", type(email), email)
+        frontend_url = request.headers.get("Origin") or os.getenv("FRONTEND_URL")
             
         token = secrets.token_urlsafe(20)
+        
         cache_key = f"reset_password_token_{token}"
         cache.set(cache_key, email, timeout=15 * 60)
         print(cache_key, cache.get(cache_key))
-        reset_link = f"http://localhost:5173/reset-password/{token}"
+        reset_link = f"{frontend_url}/reset-password/{token}"
         send_reset_password_email.delay(email, reset_link)
         return Response(
             {"message": f"Password reset link sent successfully {email}"},
             status=status.HTTP_200_OK
         )
-
+    return Response(UserData.errors, status=400)
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
