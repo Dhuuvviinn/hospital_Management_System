@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router'
 import { LogoutUser } from '../Redux/Slices/LoginSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import hms_logo from "../img/HMS_logo.png"
 const Navbar = ({ isAuthenticated,setIsAuthenticated }) => {
 const dispatch = useDispatch()

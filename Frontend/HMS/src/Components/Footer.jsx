@@ -1,5 +1,4 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router'
 import hms_logo from "../img/HMS_logo.png"
 const Footer = () => {
