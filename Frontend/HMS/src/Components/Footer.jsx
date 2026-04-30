@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router'
 import hms_logo from "../img/HMS_logo.png"
 const Footer = () => {
-  const { user } = useSelector((state) => state.login)
   return (
     <>
     <footer className="footer">
@@ -29,11 +28,7 @@ const Footer = () => {
       <br />
       <Link to="/Appointment">Appointment</Link>
       <br />
-      {/* {
-        user.role === 'admin' && (
-          <Link to="/admin">Dashboard</Link>
-        )
-      } */}
+    
     </div>
 
     <div>

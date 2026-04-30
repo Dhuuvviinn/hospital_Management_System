@@ -3,12 +3,7 @@ import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router"
 import bannerimGe from "../../assets/banner_image.jpeg"
 const Banner = () => {
-  const [Apdata, setApdata] = useState({
-    name: "",
-    phone: "",
-    dept: "",
-    date: ""
-  })
+  
   const {role} = useSelector((state)=>state.login.user)
   console.log(role)
   const navigate = useNavigate()

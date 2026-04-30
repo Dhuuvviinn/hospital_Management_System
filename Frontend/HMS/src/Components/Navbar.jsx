@@ -9,7 +9,6 @@ const logout = () =>{
     dispatch(LogoutUser())
 }
 
-const {auth} = useSelector((state) => state.login)
     return (
         <>
             <div className="topbar">
