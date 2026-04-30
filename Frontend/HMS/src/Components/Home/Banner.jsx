@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router"
-
+import bannerimGe from "../../assets/banner_image.jpeg"
 const Banner = () => {
   const [Apdata, setApdata] = useState({
     name: "",
@@ -65,67 +65,7 @@ const Banner = () => {
           </div>
 
           <div className="card heroCard">
-            <h3>Quick Appointment</h3>
-            <p className="muted">Submit the request — confirm later via backend.</p>
-
-            <form action="appointment.html" method="get" style={{ marginTop: "12px" }}>
-              <div className="formGrid">
-                <div className="field">
-                  <label htmlFor="n">Full Name</label>
-                  <input
-                    id="n"
-                    name="name"
-                    type="text"
-                    onChange={(e) => setApdata({ ...Apdata, name: e.target.value })}
-                    placeholder="John Doe"
-                    required
-                  />
-                </div>
-
-                <div className="field">
-                  <label htmlFor="p">Phone</label>
-                  <input
-                    id="p"
-                    name="phone"
-                    type="tel"
-                    onChange={(e) => setApdata({ ...Apdata, phone: e.target.value })}
-                    placeholder="+1 555 000 0000"
-                    required
-                  />
-                </div>
-
-                <div className="field">
-                  <label htmlFor="d">Department</label>
-                  <select id="d" name="dept" onChange={(e) => setApdata({ ...Apdata, dept: e.target.value })} required>
-                    <option value="">Select</option>
-                    <option>Cardiology</option>
-                    <option>Dermatology</option>
-                    <option>Orthopedics</option>
-                    <option>Pediatrics</option>
-                    <option>Neurology</option>
-                    <option>Diagnostics</option>
-                  </select>
-                </div>
-
-                <div className="field">
-                  <label htmlFor="dt">Date</label>
-                  <input id="dt" name="date" onChange={(e) => setApdata({ ...Apdata, date: e.target.value })} type="date" required />
-                </div>
-
-                <div className="field full">
-                  <button className="btn btn--primary btn--full" type="submit">
-                    Request Booking
-                  </button>
-
-                  <div
-                    style={{ marginTop: "10px", fontSize: "13px" }}
-                    className="muted"
-                  >
-                    UI only. Connect your backend later.
-                  </div>
-                </div>
-              </div>
-            </form>
+            <img src={bannerimGe} alt="Doctor Banner" className="heroImage" />
           </div>
         </div>
       </section>

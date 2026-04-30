@@ -1,13 +1,15 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router'
 import { LogoutUser } from '../Redux/Slices/LoginSlice'
-import { useDispatch } from 'react-redux'
-
+import { useDispatch, useSelector } from 'react-redux'
+import hms_logo from "../img/HMS_logo.png"
 const Navbar = ({ isAuthenticated,setIsAuthenticated }) => {
 const dispatch = useDispatch()
 const logout = () =>{
     dispatch(LogoutUser())
 }
+
+const {auth} = useSelector((state) => state.login)
     return (
         <>
             <div className="topbar">
@@ -18,7 +20,7 @@ const logout = () =>{
     <div className="topbar__meta">
       <span>Mon–Sun: 8:00–20:00</span>
       <span className="dot"></span>
-      <span>support@medicare.com</span>
+      <a href="mailto:dhruvin123.saurabhifosys@gmail.com">dhruvin123.saurabhifosys@gmail.com</a>
     </div>
   </div>
 </div>
@@ -26,10 +28,10 @@ const logout = () =>{
 <header className="header">
   <div className="container header__row">
     
-    <a className="brand" href="index.html">
-      <span className="brand__mark">+</span>
-      <span className="brand__name">Group5</span>
-    </a>
+    <Link className="brand" to="/">
+      <img src={hms_logo} style={{height: "50px",width: "50px",display: "flex",alignItems: "center",justifyContent: "center"}}  />
+      <span className="brand__name">HMS</span>
+    </Link>
 
       {
       isAuthenticated ? (<>
@@ -75,7 +77,7 @@ const logout = () =>{
       </>) : (<>  <div className="header__cta">
       
       <Link className="btn btn--ghost btn--sm" to="/login">Login</Link>
-      <Link className="btn btn--primary btn--sm" to="/appointment">Book Now</Link>
+    
      
     </div></>)
     }

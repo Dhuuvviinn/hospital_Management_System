@@ -12,7 +12,7 @@ const Appointment = () => {
     appointment_time: "",
     reason: "",
   })
-  const {user} = useSelector((state)=>state.login)
+  const { user } = useSelector((state) => state.login)
   const dispatch = useDispatch()
   const nav = useNavigate()
   const formatToAMPM = (time24) => {
@@ -26,19 +26,19 @@ const Appointment = () => {
 
     return `${h}:${minute} ${ampm}`;
   };
-  const BookAppointmentWithoutDoctor = (e) =>{
+  const BookAppointmentWithoutDoctor = (e) => {
     e.preventDefault()
     formData["patient"] = user.id
-    dispatch(getAppointmentsUsingDepartment({data:formData,token:user.access_token})).unwrap().then((res)=>{
+    dispatch(getAppointmentsUsingDepartment({ data: formData, token: user.access_token })).unwrap().then((res) => {
       dispatch(Get_all_Appointment(user.access_token))
       nav('/')
-    }).catch((err)=>{
+    }).catch((err) => {
       console.error("Failed to send appointment request.", err)
     })
   }
   return (
     <>
-    <section className="pageHero">
+      <section className="pageHero">
         <div className="container">
           <h1>Appointment</h1>
           <p>Book a consultation slot in minutes.</p>
@@ -62,7 +62,13 @@ const Appointment = () => {
               <div className="hr"></div>
 
               <div className="grid" style={{ gap: "10px" }}>
-                <div className="listItem">
+                <a
+  href="https://www.google.com/maps?q=40.7128,-74.0060" // random location
+  target="_blank"
+  rel="noopener noreferrer"
+  className="listItem"
+  style={{ textDecoration: "none", color: "inherit" }}
+>
                   <div className="left">
                     <div className="ico">📍</div>
                     <div>
@@ -71,8 +77,8 @@ const Appointment = () => {
                     </div>
                   </div>
                   <span className="badge badge--blue">Map</span>
-                </div>
-
+              </a>
+                {/* </div> */}
                 <div className="listItem">
                   <div className="left">
                     <div className="ico">⏱️</div>
@@ -87,10 +93,15 @@ const Appointment = () => {
                 <div className="listItem">
                   <div className="left">
                     <div className="ico">📞</div>
-                    <div>
-                      <div className="title">Hotline</div>
-                      <div className="sub">+1 (555) 123-4567</div>
-                    </div>
+                    <a
+                      href="tel:+15551234567"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <div>
+                        <div className="title">Hotline</div>
+                        <div className="sub">+1 (555) 123-4567</div>
+                      </div>
+                    </a>
                   </div>
                   <span className="badge badge--amber">24/7</span>
                 </div>
@@ -109,7 +120,7 @@ const Appointment = () => {
 
                   <div className="field">
                     <label htmlFor="an">Full Name</label>
-                    <input id="an" name="name" type="text" placeholder="John Doe" required onChange={(e)=>setFormData({...formData,full_name:e.target.value})}/>
+                    <input id="an" name="name" type="text" placeholder="John Doe" required onChange={(e) => setFormData({ ...formData, full_name: e.target.value })} />
                   </div>
 
                   {/* <div className="field">
@@ -119,12 +130,12 @@ const Appointment = () => {
 
                   <div className="field">
                     <label htmlFor="ap">Phone</label>
-                    <input id="ap" name="phone" type="tel" placeholder="+1 555 000 0000" required onChange={(e)=>setFormData({...formData,phone:e.target.value})}/>
+                    <input id="ap" name="phone" type="tel" placeholder="+1 555 000 0000" required onChange={(e) => setFormData({ ...formData, phone: e.target.value })} />
                   </div>
 
                   <div className="field">
                     <label htmlFor="ad">Department</label>
-                    <select id="ad" name="dept" required onChange={(e)=>setFormData({...formData,Department:e.target.value})}>
+                    <select id="ad" name="dept" required onChange={(e) => setFormData({ ...formData, Department: e.target.value })}>
                       <option value="">Select</option>
                       <option>Cardiology</option>
                       <option>Neurology</option>
@@ -137,32 +148,32 @@ const Appointment = () => {
 
                   <div className="field">
                     <label htmlFor="adate">Preferred Date</label>
-                    <input id="adate" name="date" type="date" required onChange={(e)=>setFormData({...formData,appointment_date:e.target.value})}/>
+                    <input id="adate" name="date" type="date" required onChange={(e) => setFormData({ ...formData, appointment_date: e.target.value })} />
                   </div>
 
-                   <div className="field half">
-                  <label htmlFor="time">Select Time</label>
+                  <div className="field half">
+                    <label htmlFor="time">Select Time</label>
 
-                  <input
-                    type="time"
-                    id="time"
-                    onChange={(e) => {
-                      const time24 = e.target.value;
+                    <input
+                      type="time"
+                      id="time"
+                      onChange={(e) => {
+                        const time24 = e.target.value;
 
-                      setFormData({
-                        ...formData,
-                        appointment_time: time24 + ":00"
-                      });
-                    }}
-                  />
+                        setFormData({
+                          ...formData,
+                          appointment_time: time24 + ":00"
+                        });
+                      }}
+                    />
 
-                  {/* Optional display */}
-                  {formData.appointment_time && (
-                    <p style={{ marginTop: "5px", color: "gray" }}>
-                      Selected: {formatToAMPM(formData.appointment_time)}
-                    </p>
-                  )}
-                </div>
+                    {/* Optional display */}
+                    {formData.appointment_time && (
+                      <p style={{ marginTop: "5px", color: "gray" }}>
+                        Selected: {formatToAMPM(formData.appointment_time)}
+                      </p>
+                    )}
+                  </div>
 
                   <div className="field full">
                     <label htmlFor="amsg">Notes</label>
@@ -171,7 +182,7 @@ const Appointment = () => {
                       name="notes"
                       rows="4"
                       placeholder="Write symptoms or reason for visit..."
-                      onChange={(e)=>setFormData({...formData,reason:e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, reason: e.target.value })}
                     ></textarea>
                   </div>
 

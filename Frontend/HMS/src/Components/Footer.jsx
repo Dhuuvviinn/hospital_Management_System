@@ -1,36 +1,39 @@
 import React from 'react'
-
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router'
+import hms_logo from "../img/HMS_logo.png"
 const Footer = () => {
+  const { user } = useSelector((state) => state.login)
   return (
     <>
     <footer className="footer">
   <div className="container footer__grid">
     <div>
       <a className="brand" href="index.html">
-        <span
-          className="brand__mark"
-          style={{ background: "rgba(255,255,255,.10)", color: "#fff" }}
-        >
-          +
-        </span>
+
         <span className="brand__name" style={{ color: "#fff" }}>
-          MediCare
+          <img src={hms_logo} alt="HMS Logo" style={{ height: "50px", width: "50px" }} />
         </span>
+        <span className="brand__name">HMS</span>
       </a>
       <p style={{ marginTop: "10px", color: "rgba(255,255,255,.75)" }}>
-        Static HTML + CSS healthcare UI (public site + admin dashboard).
+          Your trusted healthcare partner.
       </p>
     </div>
 
     <div>
       <h4>Quick Links</h4>
-      <a href="services.html">Services</a>
+      <Link to="/Services">Services</Link>
       <br />
-      <a href="doctors.html">Doctors</a>
+      <Link to="/Doctors">Doctors</Link>
       <br />
-      <a href="appointment.html">Appointment</a>
+      <Link to="/Appointment">Appointment</Link>
       <br />
-      <a href="dashboard/index.html">Dashboard</a>
+      {/* {
+        user.role === 'admin' && (
+          <Link to="/admin">Dashboard</Link>
+        )
+      } */}
     </div>
 
     <div>
@@ -40,13 +43,13 @@ const Footer = () => {
         <br />
         +1 (555) 123-4567
         <br />
-        support@medicare.com
+       dhruvin123.saurabhifosys@gmail.com
       </div>
     </div>
   </div>
 
   <div className="container footer__bottom">
-    © {new Date().getFullYear()} MediCare. All rights reserved.
+    © {new Date().getFullYear()} HMS. All rights reserved.
   </div>
 </footer>
     </>

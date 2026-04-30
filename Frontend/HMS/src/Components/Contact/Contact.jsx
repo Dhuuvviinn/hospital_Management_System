@@ -125,40 +125,56 @@ const Contact = () => {
               <h3 style={{ marginTop: "6px" }}>Reach us</h3>
               <div className="hr"></div>
 
+              
+
+              <div className="hr"></div>
+
               <div className="grid" style={{ gap: "10px" }}>
-                <div className="listItem">
+                <a
+  href="https://www.google.com/maps?q=40.7128,-74.0060" // random location
+  target="_blank"
+  rel="noopener noreferrer"
+  className="listItem"
+  style={{ textDecoration: "none", color: "inherit" }}
+>
                   <div className="left">
                     <div className="ico">📍</div>
                     <div>
-                      <div className="title">Address</div>
+                      <div className="title">Clinic location</div>
                       <div className="sub">123 Clinic Street, Your City</div>
                     </div>
                   </div>
-                  <span className="badge badge--blue">Office</span>
+                  <span className="badge badge--blue">Map</span>
+              </a>
+                {/* </div> */}
+                <div className="listItem">
+                  <div className="left">
+                    <div className="ico">⏱️</div>
+                    <div>
+                      <div className="title">Working hours</div>
+                      <div className="sub">Mon–Sun, 8:00–20:00</div>
+                    </div>
+                  </div>
+                  <span className="badge badge--green">Open</span>
                 </div>
 
                 <div className="listItem">
                   <div className="left">
                     <div className="ico">📞</div>
-                    <div>
-                      <div className="title">Phone</div>
-                      <div className="sub">+1 (555) 123-4567</div>
-                    </div>
+                    <a
+                      href="tel:+15551234567"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <div>
+                        <div className="title">Hotline</div>
+                        <div className="sub">+1 (555) 123-4567</div>
+                      </div>
+                    </a>
                   </div>
-                  <span className="badge badge--green">Call</span>
+                  <span className="badge badge--amber">24/7</span>
                 </div>
-
-                <div className="listItem">
-                  <div className="left">
-                    <div className="ico">✉️</div>
-                    <div>
-                      <div className="title">Email</div>
-                      <div className="sub">support@medicare.com</div>
-                    </div>
-                  </div>
-                  <span className="badge badge--amber">Mail</span>
-                </div>
-              </div>
+              
+          </div>
 
               <div className="hr"></div>
 
