@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hms-celery
+  namespace: hms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hms-celery
+  template:
+    metadata:
+      labels:
+        app: hms-celery
+    spec:
+      containers:
+        - name: hms-celery
+          image: dhruvinpatel17/hms-backend:latest
+          command: ["celery"]
+          args: ["-A", "accounts", "worker", "--loglevel=info", "--pool=solo"]
+          envFrom:
+            - secretRef:
+                name: hms-secrets

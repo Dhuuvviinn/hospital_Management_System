@@ -1,5 +1,5 @@
-import React, { use } from 'react'
-import { Appointment_TO_Doctor, Get_all_Appointment, getAppointmentsUsingDepartment } from '../../Redux/Slices/Appointment';
+import React from 'react'
+import {Get_all_Appointment, getAppointmentsUsingDepartment } from '../../Redux/Slices/Appointment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 

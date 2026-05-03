@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hms-frontend
+  namespace: hms
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hms-frontend
+  template:
+    metadata:
+      labels:
+        app: hms-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: dhruvinpatel17/hms-frontend:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hms-frontend-service
+  namespace: hms
+spec:
+  selector:
+    app: hms-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP

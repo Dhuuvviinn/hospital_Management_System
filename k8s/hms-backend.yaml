@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hms-backend
+  namespace: hms
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hms-backend
+  template:
+    metadata:
+      labels:
+        app: hms-backend
+    spec:
+      containers:
+        - name: backend
+          image: dhruvinpatel17/hms-backend:latest
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name:  hms-secrets
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1"
+              memory: "1Gi"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hms-backend-service
+  namespace: hms
+spec:
+  selector:
+    app: hms-backend
+  ports:
+    - port: 8000
+      targetPort: 8000
+  type: ClusterIP
